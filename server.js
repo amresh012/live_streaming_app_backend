@@ -7,11 +7,11 @@ import { Server as SocketIOServer } from 'socket.io';
 import NodeMediaServer from 'node-media-server';
 import cors from 'cors';
 
-import connectDB from './config/db.js';
+import connectDB from './config/db.config.js';
 import nmsConfig from './nms.js';
 import authRoutes from './routes/auth.routes.js';
 import streamRoutes from './routes/stream.routes.js';
-import paymentRoutes from './routes/payment.routes.js';
+// import paymentRoutes from './routes/payment.routes.js';
 
 dotenv.config();
 connectDB();
@@ -26,7 +26,7 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/streams', streamRoutes);
-app.use('/api/payments', paymentRoutes);
+// app.use('/api/payments', paymentRoutes);
 
 // Socket.IO setup
 io.on('connection', (socket) => {

@@ -3,17 +3,21 @@
   "version": "1.0.0",
   "description": "live-stremeaning app",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "test": "test",
-    "start": "node server.js"
+    "start": "node --watch server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.13.2",
+    "nanoid": "^5.1.5",
     "node-media-server": "^4.0.12",
     "socket.io": "^4.8.1"
   }
