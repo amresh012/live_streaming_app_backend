@@ -1,21 +1,44 @@
 // backend/controllers/stream.controller.js
-import Stream from '../models/stream.model.js';
-import User from '../models/user.model.js';
-import { nanoid } from 'nanoid';
-
+import {User,Stream} from '../models/index.js';
+import crypto from "crypto"
 export const createStream = async (req, res) => {
   try {
-    const streamKey = nanoid();
-    const stream = await Stream.create({
-      title: req.body.title,
+    const { title, description, category, scheduledAt } = req.body;
+
+    if (!title) {
+      return res.status(400).json({ message: "Title is required" });
+    }
+
+    if (scheduledAt) {
+      const scheduledDate = new Date(scheduledAt);
+      if (isNaN(scheduledDate.getTime())) {
+        return res.status(400).json({ message: "Invalid scheduled date" });
+      }
+      if (scheduledDate < new Date()) {
+        return res.status(400).json({ message: "Scheduled date must be in the future" });
+      }
+    }
+
+    const streamKey = crypto.randomBytes(16).toString("hex");
+
+    const newStream = new Stream({
       streamer: req.user._id,
+      title,
+      description,
+      category,
       streamKey,
-      status: 'live',
-      startedAt: new Date(),
+      scheduledAt,
     });
-    res.status(201).json(stream);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+
+    await newStream.save();
+
+    res.status(201).json({
+      success: true,
+      stream: newStream,
+    });
+  } catch (error) {
+    console.error("Error creating stream:", error);
+    res.status(500).json({ message: "Server Error" });
   }
 };
 

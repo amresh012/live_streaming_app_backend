@@ -1,6 +1,6 @@
 // backend/routes/wallet.routes.js
 import express from 'express';
-import { protect } from '../middleware/auth.middleware.js';
+import { authMiddleware } from '../middleware/auth.middleware.js';
 import {
   getWallet,
   requestWithdrawal,
@@ -8,7 +8,7 @@ import {
 
 const router = express.Router();
 
-router.get('/', protect, getWallet);
-router.post('/withdraw', protect, requestWithdrawal);
+router.get('/', authMiddleware, getWallet);
+router.post('/withdraw', authMiddleware, requestWithdrawal);
 
 export default router;

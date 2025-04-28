@@ -1,6 +1,6 @@
 // backend/routes/subscription.routes.js
 import express from 'express';
-import { protect } from '../middleware/auth.middleware.js';
+import { authMiddleware } from '../middleware/auth.middleware.js';
 import {
   createSubscriptionSession,
   handleWebhook,
@@ -9,7 +9,7 @@ import {
 const router = express.Router();
 
 // Create Stripe Checkout session
-router.post('/create-session/:streamerId', protect, createSubscriptionSession);
+router.post('/create-session/:streamerId', authMiddleware, createSubscriptionSession);
 
 // Stripe webhook (no auth)
 router.post('/webhook', express.raw({ type: 'application/json' }), handleWebhook);

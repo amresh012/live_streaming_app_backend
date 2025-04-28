@@ -11,12 +11,29 @@ const tipSchema = new mongoose.Schema({
 const streamSchema = new mongoose.Schema({
   title: { type: String, required: true },
   streamer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  description: {
+    type: String,
+    trim: true,
+  },
+  category: {
+    type: String,
+    trim: true,
+    default: "General", // optional default category
+  },
+  thumbnail: {
+    type: String,
+  },
   streamKey: { type: String, required: true, unique: true },
   status: { type: String, enum: ['live', 'offline'], default: 'offline' },
   startedAt: Date,
   endedAt: Date,
   tipHistory: [tipSchema],
-
+  playbackUrl: {
+    type: String, // HLS or WebRTC playback URL
+  },
+  scheduledAt: {
+    type: Date, // For future scheduled streams
+  },
   // Metrics
   viewerCount: { type: Number, default: 0 },
   totalTips: { type: Number, default: 0 },

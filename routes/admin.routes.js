@@ -1,6 +1,6 @@
 // backend/routes/admin.routes.js
 import express from 'express';
-import { protect, isAdmin } from '../middleware/auth.middleware.js';
+import { authMiddleware, isAdmin } from '../middleware/auth.middleware.js';
 import {
   getStreamStats,
   getAllUsers,
@@ -9,7 +9,7 @@ import {
 
 const router = express.Router();
 
-router.use(protect, isAdmin);
+router.use(authMiddleware, isAdmin);
 
 router.get('/stream-stats', getStreamStats);
 router.get('/users', getAllUsers);

@@ -7,14 +7,14 @@ import {
   stopStream,
   tipStreamer,
 } from '../controller/stream.controller.js';
-import { protect } from '../middleware/auth.middleware.js';
+import { authMiddleware } from '../middleware/auth.middleware.js';
 
 const router = express.Router();
 
-router.post('/', protect, createStream);
+router.post('/', authMiddleware, createStream);
 router.get('/', getAllStreams);
-router.get('/me', protect, getMyStream);
-router.post('/:id/stop', protect, stopStream);
-router.post('/:id/tip', protect, tipStreamer);
+router.get('/me', authMiddleware, getMyStream);
+router.post('/:id/stop', authMiddleware, stopStream);
+router.post('/:id/tip', authMiddleware, tipStreamer);
 
 export default router;

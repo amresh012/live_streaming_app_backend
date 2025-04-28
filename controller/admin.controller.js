@@ -1,6 +1,5 @@
 // backend/controllers/admin.controller.js
-import Stream from '../models/stream.model.js';
-import User from '../models/user.model.js';
+import {User,Stream} from "../models/index"
 
 export const getStreamStats = async (req, res) => {
   try {

@@ -1,5 +1,5 @@
 // backend/controllers/wallet.controller.js
-import User from '../models/user.model.js';
+import User from '../models/index';
 
 export const getWallet = async (req, res) => {
   try {
