@@ -11,6 +11,7 @@ import connectDB from './config/db.config.js';
 import nmsConfig from './nms.js';
 import authRoutes from './routes/auth.routes.js';
 import streamRoutes from './routes/stream.routes.js';
+import inviteRoutes from "./routes/invite.routes.js"
 // import paymentRoutes from './routes/payment.routes.js';
 
 dotenv.config();
@@ -27,7 +28,12 @@ app.use(morgan("dev"));
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/streams', streamRoutes);
+app.use("/api/invite", inviteRoutes)
 // app.use('/api/payments', paymentRoutes);
+
+app.get('/', (req, res) => {
+  res.send('Welcome to the Video Streaming API');
+})
 
 // Socket.IO setup
 io.on('connection', (socket) => {

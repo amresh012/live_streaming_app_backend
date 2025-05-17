@@ -1,6 +1,8 @@
 // backend/controllers/stream.controller.js
 import {User,Stream} from '../models/index.js';
 import crypto from "crypto"
+
+
 export const createStream = async (req, res) => {
   try {
     const { title, description, category, scheduledAt } = req.body;
@@ -14,9 +16,9 @@ export const createStream = async (req, res) => {
       if (isNaN(scheduledDate.getTime())) {
         return res.status(400).json({ message: "Invalid scheduled date" });
       }
-      if (scheduledDate < new Date()) {
-        return res.status(400).json({ message: "Scheduled date must be in the future" });
-      }
+      // if (scheduledDate < new Date()) {
+      //   return res.status(400).json({ message: "Scheduled date must be in the future" });
+      // }
     }
 
     const streamKey = crypto.randomBytes(16).toString("hex");
@@ -44,7 +46,7 @@ export const createStream = async (req, res) => {
 
 export const getAllStreams = async (req, res) => {
   try {
-    const streams = await Stream.find({ status: 'live' }).populate('streamer', 'username');
+    const streams = await Stream.find({ status: 'offline' }).populate('streamer', 'username');
     res.json(streams);
   } catch (err) {
     res.status(500).json({ message: err.message });
